@@ -8,64 +8,92 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-shell">
-    <header>
-      <div class="brand-mark">B</div>
-      <div><div class="brand">BEAST AI <span>ULTRA</span></div><small>PERSONAL AI ASSISTANT · v1.0</small></div>
-      <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
-    </header>
+<div class="app-shell">
+  <header>
+    <div class="brand-mark">B</div>
+    <div><div class="brand">BEAST AI <span>ULTRA</span></div><small>PERSONAL AI ASSISTANT · UPGRADED</small></div>
+    <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="orb-wrap"><div class="orb" id="orb"><div class="orb-core">B</div></div></div>
+      <div class="status" id="status">SYSTEM READY</div>
+      <h1>Your AI. Your Rules.</h1>
+      <p>Gemini · OpenAI · Voice · Memory</p>
+    </section>
 
-    <main>
-      <section class="hero">
-        <div class="orb-wrap"><div class="orb"><div class="orb-core">B</div></div></div>
-        <div class="status" id="status">SYSTEM READY</div>
-        <h1>Your AI. Your Rules.</h1>
-        <p>Gemini · ChatGPT · Offline-ready design</p>
-      </section>
+    <section class="engine-row">
+      <button class="engine active" data-engine="gemini">GEMINI</button>
+      <button class="engine" data-engine="openai">CHATGPT</button>
+      <button class="engine" data-engine="offline">OFFLINE</button>
+    </section>
 
-      <section class="engine-row">
-        <button class="engine active" data-engine="gemini">GEMINI</button>
-        <button class="engine" data-engine="openai">CHATGPT</button>
-        <button class="engine" data-engine="offline">OFFLINE</button>
-      </section>
-
-      <section class="chat-card">
-        <div class="chat-heading"><strong>AI CONSOLE</strong><span id="engineLabel">GEMINI ENGINE</span></div>
-        <div id="messages" class="messages">
-          <div class="bubble bot">Hello. I am BEAST AI ULTRA. Enter your AI API key in Settings, then ask me anything.</div>
-        </div>
-        <div class="composer">
-          <textarea id="prompt" rows="2" placeholder="Ask BEAST AI anything…"></textarea>
-          <button id="sendBtn" class="send-btn">➤</button>
-        </div>
-        <div class="small-note">Internet is required for Gemini and ChatGPT. Offline model support is a later module.</div>
-      </section>
-
-      <section class="quick-grid">
-        <button class="quick" data-prompt="Introduce yourself as BEAST AI ULTRA.">✦<span>Assistant</span></button>
-        <button class="quick" data-prompt="Help me understand this topic step by step.">◈<span>Learn</span></button>
-        <button class="quick" data-prompt="Give me today's productivity plan.">⌁<span>Planner</span></button>
-        <button class="quick" id="voiceBtn">🎙<span>Voice input</span></button>
-      </section>
-    </main>
-
-    <footer>BEAST AI ULTRA <span>•</span> BLACK / NEON BLUE</footer>
-  </div>
-
-  <dialog id="settingsDialog">
-    <form method="dialog" class="settings">
-      <div class="dialog-head"><h2>AI Settings</h2><button class="icon-btn" value="cancel">✕</button></div>
-      <label>Gemini API key
-        <input id="geminiKey" type="password" autocomplete="off" placeholder="Paste your Gemini key">
+    <section class="control-panel">
+      <label>PERSONALITY
+        <select id="personality">
+          <option value="jarvis">JARVIS — precise assistant</option>
+          <option value="friend">Friendly companion</option>
+          <option value="mentor">Patient mentor</option>
+          <option value="professional">Professional assistant</option>
+        </select>
       </label>
-      <label>OpenAI API key
-        <input id="openaiKey" type="password" autocomplete="off" placeholder="Paste your OpenAI key">
-      </label>
-      <p class="warning">Keys are stored only in this app's local browser storage. For a public app, use a secure backend instead of embedding API keys.</p>
-      <button id="saveSettings" class="primary" value="save">Save settings</button>
-      <button class="secondary" value="cancel">Close</button>
-    </form>
-  </dialog>
-  <script src="app.js"></script>
+      <div class="toggle-row">
+        <label class="check"><input id="voiceReply" type="checkbox" checked> Speak replies</label>
+        <label class="check"><input id="memoryEnabled" type="checkbox" checked> Memory</label>
+      </div>
+      <div class="action-row">
+        <button id="wakeBtn" class="secondary">Enable “Jarvis” wake word</button>
+        <button id="clearMemory" class="secondary">Clear memory</button>
+      </div>
+      <p class="small-note">Wake-word listening works only while this page stays open and the browser supports speech recognition. It is not an always-on Android background service.</p>
+    </section>
+
+    <section class="chat-card">
+      <div class="chat-heading"><strong>AI CONSOLE</strong><span id="engineLabel">GEMINI ENGINE</span></div>
+      <div id="messages" class="messages" aria-live="polite">
+        <div class="bubble bot">Hello. I am BEAST AI ULTRA. Add your API key in Settings, then start chatting.</div>
+      </div>
+      <div class="composer">
+        <textarea id="prompt" rows="2" placeholder="Talk to BEAST AI…"></textarea>
+        <button id="voiceBtn" class="send-btn mic-btn" aria-label="Voice input">🎙</button>
+        <button id="sendBtn" class="send-btn" aria-label="Send">➤</button>
+      </div>
+      <div class="small-note">Gemini/OpenAI require internet and an API key. Do not use a personal API key in a publicly shared website.</div>
+    </section>
+
+    <section class="quick-grid">
+      <button class="quick" data-prompt="Introduce yourself as BEAST AI ULTRA.">✦<span>Assistant</span></button>
+      <button class="quick" data-prompt="Help me understand this topic step by step.">◈<span>Learn</span></button>
+      <button class="quick" data-prompt="Make a practical plan for my day.">⌁<span>Planner</span></button>
+      <button class="quick" data-prompt="Summarize the conversation so far.">▤<span>Summary</span></button>
+    </section>
+
+    <section class="tools-panel">
+      <h2>AI TOOLS</h2>
+      <div class="tool-grid">
+        <button class="tool" data-tool="image">Image prompt</button>
+        <button class="tool" data-tool="video">Video prompt</button>
+        <button class="tool" data-tool="youtube">YouTube analysis</button>
+        <button class="tool" data-tool="screen">Screen analysis</button>
+        <button class="tool" data-tool="weather">Weather</button>
+        <button class="tool" data-tool="news">News</button>
+      </div>
+      <p class="small-note">These create guided prompts in this starter build. Real image/video generation, screen capture, YouTube fetching, live weather/news and Android actions require connected services or native Android permissions/backend.</p>
+    </section>
+  </main>
+  <footer>BEAST AI ULTRA <span>•</span> BLACK / NEON BLUE</footer>
+</div>
+
+<dialog id="settingsDialog">
+  <form method="dialog" class="settings">
+    <div class="dialog-head"><h2>AI Settings</h2><button class="icon-btn" value="cancel">✕</button></div>
+    <label>Gemini API key<input id="geminiKey" type="password" autocomplete="off" placeholder="Paste Gemini key"></label>
+    <label>OpenAI API key<input id="openaiKey" type="password" autocomplete="off" placeholder="Paste OpenAI key"></label>
+    <p class="warning">For testing only: keys are stored in this browser on this device. A public APK/website should use a secure backend proxy.</p>
+    <button id="saveSettings" class="primary" value="save">Save settings</button>
+    <button class="secondary" value="cancel">Close</button>
+  </form>
+</dialog>
+<script src="app.js"></script>
 </body>
 </html>
